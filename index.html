@@ -1,0 +1,196 @@
+<html>
+  <head>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+	  body {
+	  	font-family: arial;
+	  }
+	</style>
+  </head>
+  <body>
+    <div style="width:100%;height:152px;background-color:#eeeeee;">
+      <div style="float:left;">
+        <img src="logo.png">
+      </div>
+      <div style="float:left;">
+        <script type = "text/javascript">
+          function gt() {
+            var month = document.getElementById("month").value;
+            var day = document.getElementById("day").value;
+            var year = document.getElementById("year").value;
+            var dt = new Date(year + "-" + month + "-" + day);
+            var ant = dt.getDay() + 1;
+            if(ant == 1)
+              alert("Monday"); 
+            if(ant == 2)
+              alert("Tuesday"); 
+            if(ant == 3)
+              alert("Wednesday"); 
+            if(ant == 4)
+              alert("Thursday"); 
+            if(ant == 5)
+              alert("Friday"); 
+            if(ant == 6)
+              alert("Saturday"); 
+            if(ant == 7)
+              alert("Sunday"); 
+        }
+
+        function tf() {
+          var str = document.getElementById("t").value;
+        var n = str.length; 
+        var myArray = new Array(n);
+        var x;
+        for (x = 0; x < n; x++) {
+          myArray[x] = str.charAt(x);
+        }
+        // Traverse the string to get first '1' from 
+        // the last of string 
+        var i; 
+        for (i = n-1 ; i >= 0 ; i--) 
+            if (myArray[i] == '1') 
+                break; 
+      
+        // If there exists no '1' concatenate 1 at the 
+        // starting of string 
+        if (i == -1) 
+            document.getElementById("tt").innerHTML = '1' + str; 
+      
+        // Continue traversal after the position of 
+        // first '1' 
+        var k;
+        for (k = i-1 ; k >= 0; k--) 
+        { 
+            //Just flip the values 
+            if (myArray[k] == '1') 
+                myArray[k] = '0'; 
+            else
+                myArray[k] = '1'; 
+        } 
+      
+
+
+        var s = "";
+
+        for(y = 0; y < myArray.length; y++) {
+          s = s + myArray[y];
+        }
+        
+
+        // return the modified string 
+        document.getElementById("tt").innerHTML = s; 
+      }           
+        </script>  
+        <form method="get" action="" onsubmit="return false;">
+        What day is this (MM/DD/YYYY)? <input id="month" type="text" name="month" style="width:20px;"> / 
+        <input type="text" name="day" id="day" style="width:20px;"> / <input type="text" name="year" id="year" style="width:40px;">
+    <input type="submit" value="submit" onclick="gt();return false;">
+        </form>
+
+        <br><br>
+
+        <form method="get" action="" onsubmit="return false;">
+        Two's Complement of this: <input type="text" id="t" name="twos"> is <input onclick="tf();return false;" type="submit" value="submit">?
+        <div id="tt">
+          &nbsp;
+        </div>
+<canvas id="canvas" width="110" height="110"
+style="background-color:#FF0000;position:relative;top:-100px;left:500px;">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+setInterval(drawClock, 1000);
+
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#333';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/30);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+</script>
+        </form>
+      </div>
+    </div>
+    <div>
+    	<center>
+	    	<h2>Welcome brothas!</h2>
+		<br>
+		<NOBR><img src="this.png"> <img src="is.png"> <img src="site.png"></NOBR>
+    	</center>
+    </div>
+    <div style="color:white;text-align:center;width:100%;height:50px;background-color:black;">
+    	Copyright 2020 BertoBerto.ga All Rights Reserved
+    </div>
+  </body>
+</html>
